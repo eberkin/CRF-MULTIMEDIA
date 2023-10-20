@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">CRF</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Administratzaile kontua</string>
+    <string name="nav_header_subtitle">admin@crf.eus</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Bezeroak</string>
+    <string name="menu_gallery">Komertzialak</string>
+    <string name="menu_slideshow">Hornitzailea</string>
+</resources>
