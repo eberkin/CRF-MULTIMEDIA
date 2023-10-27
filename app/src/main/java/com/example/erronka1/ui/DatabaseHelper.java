@@ -1,5 +1,6 @@
 package com.example.erronka1.ui;
 import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -21,18 +22,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            InputStream inputStream = context.getAssets().open("androidCRF.db");
-            OutputStream outputStream = new FileOutputStream(db.getPath());
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = inputStream.read(buffer)) > 0) {
-                outputStream.write(buffer, 0, length);
-            }
-            outputStream.flush();
-            outputStream.close();
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            // Intenta crear la tabla hornitzaileak
+            db.execSQL("CREATE TABLE hornitzaileak (" +
+                    "id INTEGER PRIMARY KEY," +
+                    "cif TEXT," +
+                    "izena TEXT," +
+                    "helbidea TEXT," +
+                    "herria TEXT" +
+                    ");");
+
+            // Intenta crear la tabla bezeroak
+            db.execSQL("CREATE TABLE bezeroak (" +
+                    "id INTEGER PRIMARY KEY," +
+                    "nan TEXT," +
+                    "izena TEXT," +
+                    "abizena TEXT" +
+                    ");");
+
+            // Intenta crear la tabla komertzialak
+            db.execSQL("CREATE TABLE komertzialak (" +
+                    "id INTEGER PRIMARY KEY," +
+                    "izena TEXT," +
+                    "abizena TEXT" +
+                    ");");
+        } catch (SQLException e) {
+            // Captura la excepción si las tablas ya existen, y maneja el caso según tus necesidades.
+            e.printStackTrace(); // Puedes imprimir un mensaje o realizar otras acciones aquí.
         }
     }
 
