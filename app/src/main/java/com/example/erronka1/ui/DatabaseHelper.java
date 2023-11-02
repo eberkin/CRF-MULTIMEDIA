@@ -11,11 +11,11 @@ import java.io.OutputStream;
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "androidCRF.db";
     private static final int DATABASE_VERSION = 1;
-    private Context context; // Agrega una variable de instancia para almacenar el contexto.
+    private Context context; // Kontextua gordetzeko aldagaia deklaratu.
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.context = context; // Asigna el contexto al campo de instancia.
+        this.context = context; // Kontextua asignatu instantziari.
     }
 
     @Override
@@ -38,6 +38,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Si necesitas realizar actualizaciones en la base de datos, hazlo aquí.
+        // Datubaseko aktualizazioak hemen adierazi
     }
 }

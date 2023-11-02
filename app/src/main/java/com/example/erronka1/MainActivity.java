@@ -9,6 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.erronka1.ui.Konexioa;
+
+import java.sql.Connection;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -26,14 +30,22 @@ public class MainActivity extends AppCompatActivity {
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
-                if (username.equals("admin") && password.equals("admin")) {
-                    // Si los datos son correctos, cambia de actividad
+                try {
                     Intent intent = new Intent(MainActivity.this, MainActivity2.class);
 
-                    startActivity(intent);
-                } else {
-                    // Si los datos son incorrectos, muestra un mensaje de error
-                    Toast.makeText(MainActivity.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
+                    Konexioa konexioa = new Konexioa(username,password);
+                    Connection konexioEgokia = konexioa.connectToDatabase();
+
+                    if (konexioEgokia != null){
+                        startActivity(intent);
+                    }
+                    else {
+                        Toast.makeText(MainActivity.this, "Erabiltzaile edo pasahitz okerra", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+                catch (Exception e){
+                    Toast.makeText(MainActivity.this, "Erabiltzaile edo pasahitz desegokia", Toast.LENGTH_SHORT).show();
                 }
             }
         });
