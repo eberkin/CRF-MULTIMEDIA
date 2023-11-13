@@ -13,7 +13,7 @@
         android:layout_marginStart="44dp"
         android:layout_marginTop="42dp"
         android:layout_marginEnd="125dp"
-        android:text="Hornitzaile zerrenda"
+        android:text="Produktu zerrenda"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -34,4 +34,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/listView3"
+        android:layout_width="312dp"
+        android:layout_height="546dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="54dp"
+        android:layout_marginBottom="62dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

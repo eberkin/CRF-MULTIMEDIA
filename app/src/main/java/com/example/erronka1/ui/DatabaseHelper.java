@@ -1,12 +1,10 @@
 package com.example.erronka1.ui;
 import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import com.example.erronka1.ui.home.HomeFragment;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "androidCRF.db";
@@ -18,26 +16,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         this.context = context; // Kontextua asignatu instantziari.
     }
 
+    // Datu-basea sortzen da, tabelak sortuz
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
-            InputStream inputStream = context.getAssets().open("androidCRF.db");
-            OutputStream outputStream = new FileOutputStream(db.getPath());
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = inputStream.read(buffer)) > 0) {
-                outputStream.write(buffer, 0, length);
-            }
-            outputStream.flush();
-            outputStream.close();
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            // Produktuen taula sortu
+            db.execSQL("CREATE TABLE produktuak (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "izena TEXT," +
+                    "prezioa TEXT" +
+                    ");");
+
+            // Bezeroen taula sortu
+            db.execSQL("CREATE TABLE bezeroak (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "email TEXT ," +
+                    "izena TEXT," +
+                    "enpresa TEXT," +
+                    "mobile INTEGER" +
+                    ");");
+
+            // Komertzialen taula sortu
+            db.execSQL("CREATE TABLE komertzialak (" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "izena TEXT," +
+                    "emaila TEXT" +
+                    ");");
+        } catch (SQLException e) {
+            // Taulak dagoeneko existitzen badira, salbuespena jaso eta behar bada kudeatu.
+            e.printStackTrace(); // Hemen mezu bat inprimatu dezakezu edo beste ekintza batzuk egin.
         }
     }
 
+    // Datu-basea eguneratzen da, bertsio aldaketa bat egiten bada
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Datubaseko aktualizazioak hemen adierazi
+        // Hemen datu-basearen eguneraketak adierazi
     }
 }

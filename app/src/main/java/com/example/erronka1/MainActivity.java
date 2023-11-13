@@ -1,17 +1,24 @@
 package com.example.erronka1;
 
+import static java.security.AccessController.getContext;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.erronka1.ui.DatabaseHelper;
 import com.example.erronka1.ui.Konexioa;
+import com.example.erronka1.ui.SQLiteDataHandler;
 
 import java.sql.Connection;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,6 +26,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Sortu SQLiteDataHandler instantzia eta ireki datu-basearen instantzia.
+        SQLiteDataHandler sqliteDataHandler = new SQLiteDataHandler(this);
+        sqliteDataHandler.open();
+
+        // Deitu metodoa taulako datu guztiak ezabatzeko.
+        sqliteDataHandler.deleteAllData();
+
+        // Itxi SQLite datubasea
+        sqliteDataHandler.close();
 
         Button loginButton = findViewById(R.id.loginButton);
         final EditText usernameEditText = findViewById(R.id.editTextText);
@@ -33,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Intent intent = new Intent(MainActivity.this, MainActivity2.class);
 
-                    Konexioa konexioa = new Konexioa(username,password);
-                    Connection konexioEgokia = konexioa.connectToDatabase();
+                    // Sortu Konexioa instantzia, eman oraindik erabiltzaile-izena eta pasahitza.
+                    Konexioa konexioa = new Konexioa(MainActivity.this, username, password);
 
-                    if (konexioEgokia != null){
+                    if (konexioa.status){
                         startActivity(intent);
                     }
                     else {
@@ -50,6 +67,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
 }
